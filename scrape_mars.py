@@ -32,7 +32,6 @@ def scrape_info():
         "news_title": news_title,
         "news_paragraph": news_paragraph
     }
-
     #Visit image url
     url_image = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
     browser.visit(url_image)
@@ -69,7 +68,10 @@ def scrape_info():
     time.sleep(10)
 
     #store
-    facts_table = pd.read_html(url_mars_facts)
+    facts_table = pd.read_html(url_mars_facts)[0]
+    facts_table.columns = ["Description", "Values"]
+    facts_table.set_index(["Description"],inplace=True)
+
 
     #Visit Mars Hemisphere's page
     url_mars_hems = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
